@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}flasky{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>e-mails enviados</h1>
+    <p>relação de e-mails enviados para o administrador do sistema, notificando o cadastro de novos usuários.</p>
+</div>
+{% if emails %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>de</th>
+            <th>para</th>
+            <th>assunto</th>
+            <th>texto</th>
+            <th>data/hora</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for email in emails %}
+        <tr>
+            <td>{{ email.sender }}</td>
+            <td>{{ email.recipient }}</td>
+            <td>{{ email.subject }}</td>
+            <td><pre>{{ email.body }}</pre></td>
+            <td>{{ moment(email.timestamp).format('DD/MM/YYYY HH:mm:ss') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="alert alert-info">
+    nenhum e-mail foi enviado ainda.
+</div>
+{% endif %}
+
+{% endblock %}
